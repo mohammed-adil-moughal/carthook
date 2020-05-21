@@ -26,32 +26,46 @@ class UserController extends Controller
         return $cache;
     }
 
+    private function fetchAndPopulateUsers()
+    {
+        $res = Http::get('http://jsonplaceholder.typicode.com/users');
+        $usersJson = $res->json();
+        foreach ($usersJson as $userRec) {
+            $user = new User;
+            $user->fill($userRec);
+            $user->save();
+        }
+
+        $this->resetCache('user');
+    }
+
+    private function checkExpCache($tableName)
+    {
+        $cache = Cache::where('table_name', $tableName)->first();
+        if (!$cache) {
+            $cache = $this->resetCache($tableName);
+        }
+
+        $currentDateTime= new DateTime();
+
+        return $cache->time_to_live < $currentDateTime ? false : true;
+    }
+
     /**
      * @return void
      */
     public function getUsers()
     {
-        $cache = Cache::where('table_name', 'user')->first();
-        if (!$cache) {
-            $cache = $this->resetCache('user');
+        $cacheExpired = $this->checkExpCache('user');
+
+        if ($cacheExpired) {
+            User::truncate();
+            $this->fetchAndPopulateUsers();
         }
 
-        $currentDateTime= new DateTime();
+        $users = User::all();
 
-        if ($cache->time_to_live > $currentDateTime) {
-            $users = User::all();
-            $users->truncate();
-        }
-
-        $res = Http::get('http://jsonplaceholder.typicode.com/users');
-        $usersJson = $res->json();
-        foreach ($usersJson as $user) {
-var_dump($user);die();
-        }
-        // echo $res->getStatusCode(); // 200
-        // echo $res->getBody();
-
-
+        return response($users)->header('Content-Type', 'application/json');
     }
 
     /**
