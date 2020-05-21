@@ -18,9 +18,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
 Route::get('/users', 'UserController@getUsers');
 Route::get('/users/{id}', 'UserController@getUser');
-Route::get('/users/{id}/posts','UserController@getUserPosts');
-Route::get('/users/{id}/posts/{postId}','UserController@getUserPost');
-Route::get('/posts/{id}/comments','PostController@getPostComments');
+Route::get('/users/{id}/posts', 'UserController@getUserPosts');
+Route::get('/users/{id}/posts/{postId}', 'UserController@getUserPost');
+Route::get('/posts/{id}/comments', 'PostController@getPostComments');
