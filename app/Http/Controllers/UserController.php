@@ -156,3 +156,10 @@ class UserController extends Controller
         return response($post)->header('Content-Type', 'application/json');
     }
 }
+/**
+ * Improvements
+ * 1) Move all logic to a service and have controllers explicitly receive requests and dispatch responses
+ * 2) Move caching to a separate cron  (maybe a cron server as well) and have it run on regular intervals
+ * 3) Improve caching to more intelligent and not just truncate and insert
+ * 4) Implement caching on routes Cloudflare and bust cache when a valid update happens(tied to intelligent caching)
+ */
