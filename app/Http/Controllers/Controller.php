@@ -48,7 +48,11 @@ class Controller extends BaseController
             $cache = $this->resetCache($tableName);
         }
 
-        $currentDateTime= new DateTime();
+        $currentDateTime = new DateTime();
+        $currentDateTime->format("Y-m-d H:i:s");
+
+        $prevDateTime = new DateTime($cache->time_to_live);
+        $prevDateTime->format("Y-m-d H:i:s");
 
         return $cache->time_to_live < $currentDateTime ? true : false;
     }
