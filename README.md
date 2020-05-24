@@ -1,5 +1,6 @@
 Implementation
 1) Created Cache layer to Database -> this will be used to temporary cache the results with a time to live entry in the database and when the time to live expires we request a fetch and truncate the related tables
+
 2) Created Tables (
 ```
 Users -> to hold the users
@@ -12,8 +13,10 @@ Cache -> will hold cache
    'table_name', 'time_to_live' 
 ```
 requirements including the names of tables which can be extended to functionality i.e for comments to have comments and Id)
-2) Implemented Models with fillables as per API endpoint for easy inserts
-3) Added Endpoints
+
+3) Implemented Models with fillables as per API endpoint for easy inserts
+
+4) Added Endpoints
 
 
 ```
