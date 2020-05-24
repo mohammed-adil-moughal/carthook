@@ -1,7 +1,7 @@
 Implementation
-1)Created Cache layer to Database
-2)Implemented Models with fillables as per API endpoint for easy inserts
-3)Added Enpoints
+1) Created Cache layer to Database
+2) Implemented Models with fillables as per API endpoint for easy inserts
+3) Added Endpoints
 
 
 
