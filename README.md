@@ -42,3 +42,4 @@ Fetch Users Single Posts -> localhost:8000/api/users/1/posts/1
 5) Add versioning to API endpoints for further extension
 
 
+# Basic CS
