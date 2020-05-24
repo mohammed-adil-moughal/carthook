@@ -15,18 +15,6 @@ use DateInterval;
 class UserController extends Controller
 {
 
-    private function resetCache($tableName)
-    {
-        $dateTimeObj= new DateTime();
-        $dateTimeObj->add(new DateInterval("PT1H"));
-        $cache = new Cache;
-        $cache->table_name = $tableName;
-        $cache->time_to_live = $dateTimeObj;
-        $cache->save();
-
-        return $cache;
-    }
-
     private function fetchAndPopulateUsers()
     {
         $res = Http::get('http://jsonplaceholder.typicode.com/users');
@@ -52,22 +40,6 @@ class UserController extends Controller
         }
 
         $this->resetCache('posts');
-    }
-
-    /**
-     * @param string $tableName
-     * @return bool
-     */
-    private function checkExpCache($tableName)
-    {
-        $cache = Cache::where('table_name', $tableName)->first();
-        if (!$cache) {
-            $cache = $this->resetCache($tableName);
-        }
-
-        $currentDateTime= new DateTime();
-
-        return $cache->time_to_live < $currentDateTime ? false : true;
     }
 
     /**
