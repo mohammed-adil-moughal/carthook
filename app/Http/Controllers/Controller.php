@@ -54,6 +54,6 @@ class Controller extends BaseController
         $prevDateTime = new DateTime($cache->time_to_live);
         $prevDateTime->format("Y-m-d H:i:s");
 
-        return $cache->time_to_live < $currentDateTime ? true : false;
+        return $prevDateTime < $currentDateTime ? true : false;
     }
 }
