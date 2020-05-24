@@ -1,4 +1,6 @@
-Implementation
+#Advanced/Practical
+
+##Implementation
 1) Created Cache layer to Database -> this will be used to temporary cache the results with a time to live entry in the database and when the time to live expires we request a fetch and truncate the related tables
 
 2) Created Tables
@@ -32,7 +34,7 @@ Fetch Users Posts -> localhost:8000/api/users/1/posts
 Fetch Users Single Posts -> localhost:8000/api/users/1/posts/1
 ```
 
-Improvements
+##Improvements
 1) Move all logic to a service and have controllers explicitly receive requests and dispatch responses this is usefull to have a structured folder structure setup for large scale mamangement and better development experience
 2) Move caching to a separate cron  (maybe a cron server as well) and have it run on regular intervals as opposed to on a specific request to the endpoint
 3) Improve caching to more intelligent and not just truncate and insert cause if no change to data then we might not need to update records can improve this to avoid extra database calls
