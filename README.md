@@ -43,3 +43,47 @@ Fetch Users Single Posts -> localhost:8000/api/users/1/posts/1
 
 
 # Basic CS
+
+A) Design a SQL database to store NBA players, teams and games (column and table contents are all up to you). Users mostly query game results by date and team name. The second most frequent query is players statistics by player name.
+```
+Table players
+
+PK id 
+string name
+string desciption
+string weight
+string height
+
+FK team_fk (foreign key to the Teams Table)
+DateTime date_created
+DateTime date_modified
+
+
+Table teams
+
+PK id
+PK name
+DateTime date_created
+DateTime date_modified
+
+Table games
+
+PK id
+FK home_team
+FK away_team
+DateTime date_played
+DateTime date_created
+DateTime date_modified
+
+```
+
+
+B) How would you find files that begin with "0aH" and delete them given a folder (with subfolders)? Assume there are many files in the folder.
+linux comand
+```
+find -type f -name '*OaH*' -exec rm {}
+```
+
+C) Write a function that sorts 11 small numbers (<100) as fast as possible. Estimate how long it would take to execute that function 10 Billion (10^10) times on a normal machine?
+
+D) Write a function that sorts 10000 powers (a^b) where a and b are random numbers between 100 and 10000? Estimate how long it would take on your machine?
