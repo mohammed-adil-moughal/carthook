@@ -35,6 +35,11 @@ class PostController extends Controller
         }
 
         $comments = Comment::where('postId', $id)->get();
+
+        if (!$comments || $comments->count() == 0) {
+            $this->fetchAndPopulateComments($id);
+        }
+
         return response($comments)->header('Content-Type', 'application/json');
     }
 }

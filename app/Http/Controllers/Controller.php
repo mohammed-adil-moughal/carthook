@@ -31,7 +31,7 @@ class Controller extends BaseController
         }
 
         $cache->table_name = $tableName;
-        $cache->time_to_live = $dateTimeObj;
+        $cache->time_to_live = $dateTimeObj->format("Y-m-d H:i:s");
         $cache->save();
 
         return $cache;
