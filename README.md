@@ -1,4 +1,4 @@
-``
+```
 Fetch post by title -> localhost:8000/api/posts?title=qui
 Fetch all posts -> localhost:8000/api/posts
 Fetch all comments of a Post -> localhost:8000/api/posts/1/comments
