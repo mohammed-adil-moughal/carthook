@@ -37,5 +37,6 @@ Improvements
 2) Move caching to a separate cron  (maybe a cron server as well) and have it run on regular intervals as opposed to on a specific request to the endpoint
 3) Improve caching to more intelligent and not just truncate and insert cause if no change to data then we might not need to update records can improve this to avoid extra database calls
 4) Implement caching on routes Cloudflare and bust cache when a valid update happens(tied to intelligent caching)
+5) Add versioning to API endpoints for further extension
 
 
