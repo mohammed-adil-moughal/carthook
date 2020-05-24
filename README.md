@@ -19,9 +19,9 @@ Fetch Users Single Posts -> localhost:8000/api/users/1/posts/1
 ```
 
 Improvements
-1) Move all logic to a service and have controllers explicitly receive requests and dispatch responses
-2) Move caching to a separate cron  (maybe a cron server as well) and have it run on regular intervals
-3) Improve caching to more intelligent and not just truncate and insert
+1) Move all logic to a service and have controllers explicitly receive requests and dispatch responses this is usefull to have a structured folder structure setup for large scale mamangement and better development experience
+2) Move caching to a separate cron  (maybe a cron server as well) and have it run on regular intervals as opposed to on a specific request to the endpoint
+3) Improve caching to more intelligent and not just truncate and insert cause if no change to data then we might not need to update records can improve this to avoid extra database calls
 4) Implement caching on routes Cloudflare and bust cache when a valid update happens(tied to intelligent caching)
 
 
