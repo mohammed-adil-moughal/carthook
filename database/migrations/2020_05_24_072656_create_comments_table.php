@@ -19,7 +19,7 @@ class CreateCommentsTable extends Migration
             $table->string('postId');
             $table->string('name');
             $table->string('email');
-            $table->string('body');
+            $table->text('body');
         });
     }
 
