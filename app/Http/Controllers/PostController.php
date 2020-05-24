@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Http;
+use Illuminate\Http\Request;
 
+use App\Post;
 use App\Comment;
 
 class PostController extends Controller
@@ -21,7 +23,7 @@ class PostController extends Controller
 
         $this->resetCache('comments'.$id);
     }
-   /**
+    /**
      * @param $id
      * @return void
      */
@@ -42,5 +44,30 @@ class PostController extends Controller
         }
 
         return response($comments)->header('Content-Type', 'application/json');
+    }
+
+    /**
+     * @param Request $request
+     * @return void
+     */
+    public function getPosts(Request $request)
+    {
+        $cacheExpired = $this->checkExpCache('posts');
+        if (!$cacheExpired) {
+            Post::truncate();
+            $this->fetchAndPopulatePosts();
+        }
+
+        $titleQuery = $request->query('title');
+        if ($titleQuery) {
+            $posts = Post::firstWhere('title', 'LIKE', "%$titleQuery%");
+            if (!$posts) {
+                return response()->json(['error' => 'Not found'], 404);
+            }
+            return response($posts)->header('Content-Type', 'application/json');
+        }
+
+        $posts = Post::all();
+        return response($posts)->header('Content-Type', 'application/json');
     }
 }

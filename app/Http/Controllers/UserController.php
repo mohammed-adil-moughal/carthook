@@ -28,20 +28,6 @@ class UserController extends Controller
         $this->resetCache('user');
     }
 
-
-    private function fetchAndPopulatePosts()
-    {
-        $res = Http::get('http://jsonplaceholder.typicode.com/posts');
-        $postJson = $res->json();
-        foreach ($postJson as $postRec) {
-            $post = new Post;
-            $post->fill($postRec);
-            $post->save();
-        }
-
-        $this->resetCache('posts');
-    }
-
     /**
      * @param Request $request
      * @return void
@@ -115,7 +101,7 @@ class UserController extends Controller
     public function getUserPost($id, $postId)
     {
         $cacheExpired = $this->checkExpCache('posts');
-        if ($cacheExpired) {
+        if (!$cacheExpired) {
             Post::truncate();
             $this->fetchAndPopulatePosts();
         }

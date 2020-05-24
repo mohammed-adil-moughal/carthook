@@ -56,4 +56,17 @@ class Controller extends BaseController
 
         return $prevDateTime < $currentDateTime ? true : false;
     }
+
+    protected function fetchAndPopulatePosts()
+    {
+        $res = Http::get('http://jsonplaceholder.typicode.com/posts');
+        $postJson = $res->json();
+        foreach ($postJson as $postRec) {
+            $post = new Post;
+            $post->fill($postRec);
+            $post->save();
+        }
+
+        $this->resetCache('posts');
+    }
 }
