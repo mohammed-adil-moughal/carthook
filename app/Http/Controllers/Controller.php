@@ -50,6 +50,6 @@ class Controller extends BaseController
 
         $currentDateTime= new DateTime();
 
-        return $cache->time_to_live < $currentDateTime ? false : true;
+        return $cache->time_to_live < $currentDateTime ? true : false;
     }
 }

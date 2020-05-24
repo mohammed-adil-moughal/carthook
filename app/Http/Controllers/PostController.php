@@ -29,7 +29,7 @@ class PostController extends Controller
     {
         $cacheExpired = $this->checkExpCache('comments'.$id);
 
-        if (!$cacheExpired) {
+        if ($cacheExpired) {
             Comment::truncate();
             $this->fetchAndPopulateComments($id);
         }

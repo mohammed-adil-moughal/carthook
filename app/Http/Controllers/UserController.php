@@ -98,7 +98,7 @@ class UserController extends Controller
     public function getUserPosts($id)
     {
         $cacheExpired = $this->checkExpCache('posts');
-        if (!$cacheExpired) {
+        if ($cacheExpired) {
             Post::truncate();
             $this->fetchAndPopulatePosts();
         }
@@ -115,7 +115,7 @@ class UserController extends Controller
     public function getUserPost($id, $postId)
     {
         $cacheExpired = $this->checkExpCache('posts');
-        if (!$cacheExpired) {
+        if ($cacheExpired) {
             Post::truncate();
             $this->fetchAndPopulatePosts();
         }
