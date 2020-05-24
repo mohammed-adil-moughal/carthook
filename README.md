@@ -1,7 +1,7 @@
 Implementation
 1) Created Cache layer to Database -> this will be used to temporary cache the results with a time to live entry in the database and when the time to live expires we request a fetch and truncate the related tables
 
-2) Created TableS
+2) Created Tables
 ```
 Users -> to hold the users
     'name', 'email', 'username', 'phone', 'website'
