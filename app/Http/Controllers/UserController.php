@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Http;
 
 use App\Cache;
 use App\User;
+use App\Post;
 
 use DateTime;
 use DateInterval;
@@ -39,6 +40,24 @@ class UserController extends Controller
         $this->resetCache('user');
     }
 
+
+    private function fetchAndPopulatePosts()
+    {
+        $res = Http::get('http://jsonplaceholder.typicode.com/posts');
+        $postJson = $res->json();
+        foreach ($postJson as $postRec) {
+            $post = new Post;
+            $post->fill($postRec);
+            $post->save();
+        }
+
+        $this->resetCache('posts');
+    }
+
+    /**
+     * @param string $tableName
+     * @return bool
+     */
     private function checkExpCache($tableName)
     {
         $cache = Cache::where('table_name', $tableName)->first();
@@ -52,9 +71,10 @@ class UserController extends Controller
     }
 
     /**
+     * @param Request $request
      * @return void
      */
-    public function getUsers()
+    public function getUsers(Request $request)
     {
         $cacheExpired = $this->checkExpCache('user');
 
@@ -63,8 +83,17 @@ class UserController extends Controller
             $this->fetchAndPopulateUsers();
         }
 
-        $users = User::all();
+        $emailQuery = $request->query('email');
+        if ($emailQuery) {
+            $users= User::firstWhere('email', $emailQuery);
+            if (!$users) {
+                return response()->json(['error' => 'Not found'], 404);
+            }
+            return response($users)->header('Content-Type', 'application/json');
+        }
 
+
+        $users = User::all();
         return response($users)->header('Content-Type', 'application/json');
     }
 
@@ -74,7 +103,20 @@ class UserController extends Controller
      */
     public function getUser($id)
     {
-        var_dump("getUser".$id);die();
+        $cacheExpired = $this->checkExpCache('user');
+
+        if ($cacheExpired) {
+            User::truncate();
+            $this->fetchAndPopulateUsers();
+        }
+
+        $users = User::find($id);
+
+        if (!$users) {
+            return response()->json(['error' => 'Not found'], 404);
+        }
+
+        return response($users)->header('Content-Type', 'application/json');
     }
 
     /**
@@ -83,7 +125,14 @@ class UserController extends Controller
      */
     public function getUserPosts($id)
     {
-        var_dump("getUserPosts".$id);die();
+        $cacheExpired = $this->checkExpCache('posts');
+        if (!$cacheExpired) {
+            Post::truncate();
+            $this->fetchAndPopulatePosts();
+        }
+
+        $posts = Post::where('userId', $id)->get();
+        return response($posts)->header('Content-Type', 'application/json');
     }
 
     /**
@@ -93,6 +142,17 @@ class UserController extends Controller
      */
     public function getUserPost($id, $postId)
     {
-        var_dump("getUserPostsId".$id.$postId);die();
+        $cacheExpired = $this->checkExpCache('posts');
+        if (!$cacheExpired) {
+            Post::truncate();
+            $this->fetchAndPopulatePosts();
+        }
+
+        $post = Post::find($postId);
+        if (!$post || $post->userId !== $id) {
+            return response()->json(['error' => 'Not found'], 404);
+        }
+
+        return response($post)->header('Content-Type', 'application/json');
     }
 }
