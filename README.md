@@ -110,6 +110,8 @@ function bubbleSort($arr) {
 The time to execute this will increment expoentially as it has two for loops running
 
 D) Write a function that sorts 10000 powers (a^b) where a and b are random numbers between 100 and 10000? Estimate how long it would take on your machine?
+
+Quick sort Algorithim
 ```
 function partition(&$arr,$leftIndex,$rightIndex)
 {
