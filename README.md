@@ -85,5 +85,28 @@ find -type f -name '*OaH*' -exec rm {}
 ```
 
 C) Write a function that sorts 11 small numbers (<100) as fast as possible. Estimate how long it would take to execute that function 10 Billion (10^10) times on a normal machine?
+```
+we could user phps inbuilt sort function
+$numbers = [9,8,2,1,3,5,10,11,12,29,49,59,20,34,23,45];
+sort($numbers);
+```
+BEST algorithim for sorting will be Quick sort but takes abit of time to implement so will do bubble sort O(n^2) very in efficient
+```
+function bubbleSort($arr) {
+  $length = count($arr);
+  for ( $i = 0; $i < $length; $i++ ) {
+    for ( $j = 0; $j < $length - 1; $j++ ) {
+      if ( $arr[ $j ] > $arr[ $j + 1 ] ) {
+        $tmp            = $arr[ $j + 1 ];
+        $arr[ $j + 1 ]  = $arr[ $j ];
+        $arr[ $j ]      = $tmp;
+      } 
+    } 
+  } 
+  return $arr;
+}
+
+```
+The time to execute this will increment expoentially as it has two for loops running
 
 D) Write a function that sorts 10000 powers (a^b) where a and b are random numbers between 100 and 10000? Estimate how long it would take on your machine?
