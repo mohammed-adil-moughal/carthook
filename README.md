@@ -110,3 +110,45 @@ function bubbleSort($arr) {
 The time to execute this will increment expoentially as it has two for loops running
 
 D) Write a function that sorts 10000 powers (a^b) where a and b are random numbers between 100 and 10000? Estimate how long it would take on your machine?
+
+<?php
+/**
+@param &array $arr
+@param int $leftIndex
+@param int $rightIndex
+@return int
+**/
+function partition(&$arr,$leftIndex,$rightIndex)
+{
+    $pivot=$arr[($leftIndex+$rightIndex)/2]; //find midpoint of array
+     
+    while ($leftIndex <= $rightIndex) //continue till rightindex is greater than left
+    {        
+        while ($arr[$leftIndex] < $pivot)             
+                $leftIndex++;//increment counter if element in index is less than pivot
+        while ($arr[$rightIndex] > $pivot)
+                $rightIndex--;//increment counter if element in index is greater than pivot
+        if ($leftIndex <= $rightIndex) {  
+                $temp = $arr[$leftIndex]; //temp variable to hold left
+                $arr[$leftIndex] = $arr[$rightIndex]; // assign right element to left
+                $arr[$rightIndex] = $temp; //then assign the right to the temp variable
+                $leftIndex++; //increment counter
+                $rightIndex--; // decrement counter
+        }
+    }
+    return $leftIndex;
+}
+ 
+function quickSort(&$arr, $leftIndex, $rightIndex)
+{
+    $index = partition($arr,$leftIndex,$rightIndex);
+    if ($leftIndex < $index - 1)
+        quickSort($arr, $leftIndex, $index - 1);
+    if ($index < $rightIndex)
+        quickSort($arr, $index, $rightIndex);
+}
+
+$array = [6,7,1,4,295,23,3434];
+quickSort($array,0,count($array)-1);
+var_dump($array);
+?>
