@@ -17,10 +17,11 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-
+//user related routes
 Route::get('/users', 'UserController@getUsers');
 Route::get('/users/{id}', 'UserController@getUser');
 Route::get('/users/{id}/posts', 'UserController@getUserPosts');
 Route::get('/users/{id}/posts/{postId}', 'UserController@getUserPost');
 Route::get('/posts', 'PostController@getPosts');
+//post related routes
 Route::get('/posts/{id}/comments', 'PostController@getPostComments');
